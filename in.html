@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Linkin Park Quiz</title>
+  <link rel="stylesheet" href="linkinPark.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia&effect=fire">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia&effect=neon|outline|emboss|shadow-multiple">
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-03jaWufT.css">
 </head>
 <body>
   <div id="app">
@@ -36,7 +36,7 @@
         <!-- Аудио для вопроса 16 -->
         <div v-if="question.id === 'q16'">
           <audio controls>
-            <source src="/assets/linkin-park-battle-symphony-DkFjE6aB.mp3" type="audio/mpeg">
+            <source src="audio/linkin-park-battle-symphony.mp3" type="audio/mpeg">
             Ваш браузер не поддерживает аудио элементы.
           </audio>
         </div>
