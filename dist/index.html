@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linkin Park Quiz</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia&effect=fire">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia&effect=neon|outline|emboss|shadow-multiple">
+  <script src="vue.global.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-03jaWufT.css">
+</head>
+<body>
+  <div id="app">
+    <div class="quiz-container">
+      <div class="linkinParkimage">
+        <img :src="currentImage" alt="Linkin Park" class="top-right-image">
+      </div>
+      
+      <p id="p" class="font-effect-neon intro-text" style="color: rgb(32, 100, 9); font-weight: bold; font-size: 20px;">
+        Викторина посвящена знаменитой американской группе <span class="font-effect-fire" style="font-size: 25px;">Linkin Park</span>. 
+        В ней {{ questions.length }} вопросов.<br>
+        Для начала необходимо прочитать вопросы и выбрать подходящий ответ, нажав на кружок, а затем нажать на кнопку "Ответить".<br>
+        На правильный ответ дается две попытки, в случае если попытки исчерпаны, кнопка "Ответить" блокируется.<br>
+        В конце викторины нажмите кнопку "Показать результаты", чтобы узнать как вы справились. <br>
+        Удачи при прохождении викторины. Верьте в себя и у вас все получится!
+      </p>
+      
+      <!-- Вопросы -->
+      <div v-for="(question, index) in questions" :key="question.id"
+           :class="['question-container', 
+                    { 'active': currentQuestionIndex === index },
+                    { 'answered': question.answered }]">
+        
+        <p class="qustion_title font-effect-neon" style="color: rgb(81, 54, 1);">{{ index + 1 }}. {{ question.text }}</p>
+        
+        <!-- Аудио для вопроса 16 -->
+        <div v-if="question.id === 'q16'">
+          <audio controls>
+            <source src="/assets/linkin-park-battle-symphony-DkFjE6aB.mp3" type="audio/mpeg">
+            Ваш браузер не поддерживает аудио элементы.
+          </audio>
+        </div>
+        
+        <div class="quiz">
+          <label v-for="option in question.options" :key="option.value"
+                 :class="['quiz_item large-radio', 
+                          { 'selected': question.selectedAnswer === option.value },
+                          { 'correct': question.answered && option.value === question.correctAnswer },
+                          { 'incorrect': question.answered && question.selectedAnswer === option.value && option.value !== question.correctAnswer }]"
+                 @click="selectAnswer(question.id, option.value)">
+            <input type="radio" 
+                   :name="question.id" 
+                   :value="option.value"
+                   :checked="question.selectedAnswer === option.value"
+                   :disabled="question.answered">
+            <span v-if="option.image" class="quiz_title_date">
+              <img :src="option.image" :alt="option.text">
+            </span>
+            <span v-else class="quiz_title_date font-effect-shadow-multiple">
+              {{ option.text }}
+            </span>
+          </label>
+        </div>
+        
+        <button class="answer-btn" 
+                @click="checkAnswer(question.id)"
+                :disabled="!question.selectedAnswer || question.answered">
+          Ответить (Попыток: {{ question.maxAttempts - question.attempts }})
+        </button>
+        
+        <div v-if="question.result" :class="['result', 
+              { 'correct': question.correct },
+              { 'incorrect': !question.correct && question.answered },
+              { 'attempts': !question.correct && !question.answered }]">
+          {{ question.result }}
+        </div>
+      </div>
+
+      <!-- Результаты -->
+      <div v-if="showResults" class="results-summary">
+        <h2>🎯 Результаты викторины</h2>
+        <div class="score">{{ correctAnswers }} / {{ questions.length }}</div>
+        <p>{{ resultMessage }}</p>
+        <p>Процент правильных ответов: {{ percentage }}%</p>
+        <button @click="resetQuiz" class="answer-btn">Пройти викторину еще раз</button>
+      </div>
+
+      <button id="showResults" 
+              @click="showResults = true" 
+              :disabled="!allQuestionsAnswered">
+        Показать результаты
+      </button>
+    </div>
+
+    <!-- Эффекты -->
+    <div class="effects-container" ref="effectsContainer"></div>
+    
+    <!-- Уведомления -->
+    <div v-if="notification.show" 
+         :class="['notification', notification.type]"
+         :style="{ top: notification.y + 'px', left: notification.x + 'px' }">
+      {{ notification.message }}
+    </div>
+  </div>
+
+  <script src="linkinPark.js"></script>
+  
+</body>
+</html>
