@@ -18,13 +18,13 @@
 }
 
 .large-radio input[type="radio"] {
-  transform: scale(2); /* Увеличивает в 1.5 раза */
+  transform: scale(1.5); /* Увеличивает в 1.5 раза */
   margin: 0 10px;
 }
 
 .quiz-container {
   width: 100%;
-  max-width: 75%; /* На мобильных 95% ширины экрана */
+  max-width: 100%; /* На мобильных 95% ширины экрана */
   margin: 0 auto;
   background: linear-gradient(135deg, 
     #4a415b 0%, 
@@ -43,7 +43,7 @@
 }
 
 .top-right-image {
-  width: 60%;
+  width: 70%;
   border-radius: 10px;
   box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
@@ -359,8 +359,8 @@
         <img :src="currentImage" alt="Linkin Park" class="top-right-image">
       </div>
       
-      <p id="p" class="font-effect-neon intro-text" style="color: rgb(32, 100, 9); font-weight: bold; font-size: 20px;">
-        Викторина посвящена знаменитой американской группе <span class="font-effect-fire" style="font-size: 25px;">Linkin Park</span>. 
+      <p id="p" class="font-effect-neon intro-text" style="color: rgb(32, 100, 9); font-weight: bold; font-size: 30px;">
+        Викторина посвящена знаменитой американской группе <span class="font-effect-fire" style="font-size: 25px;">Linkin Park</span>.<br>
         В ней {{ questions.length }} вопросов.<br>
         Для начала необходимо прочитать вопросы и выбрать подходящий ответ, нажав на кружок, а затем нажать на кнопку "Ответить".<br>
         На правильный ответ дается две попытки, в случае если попытки исчерпаны, кнопка "Ответить" блокируется.<br>
